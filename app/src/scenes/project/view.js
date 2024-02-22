@@ -60,39 +60,42 @@ export default function ProjectView() {
 }
 
 const ProjectDetails = ({ project }) => {
-  console.log(project);
+  console.log("PROJECT", project);
   return (
     <div>
-      <div className="flex flex-wrap p-3">
-        <div className="w-full ">
-          <div className="flex gap-3">
+      {Array.isArray(project) &&
+        project.map((oneProject, index) => (
+          <div className="flex flex-wrap p-3" key={index}>
             <div className="w-full">
-              <div className="flex justify-between gap-2">
-                <div className="flex gap-20">
-                  <span className="w-fit text-[20px] text-[#0C1024] font-bold">Nom du projet : </span>
-                  <span className="w-fit text-[20px] text-[#0C1024] font-bold">{project.name.toString()}</span>
-                </div>
-                <div className="flex flex-1 flex-column items-end gap-3">
-                  <Links project={project} />
-                </div>
-              </div>
-              <div className="w-full md:w-[50%]">
-                <div className="pt-2 ">
-                  <span className="text-[16px] text-[#676D7C] font-medium">{project.description ? project.description : ""}</span>
-                </div>
-                <div className="mt-4 text-[18px] text-[#000000] font-semibold">
-                  {`Objective :`} <span className="text-[#676D7C] text-[16px] font-medium">{project.objective ? project.objective : ""}</span>
-                </div>
-                <div className="mt-2 mr-2">
-                  <span className="text-[18px] font-semibold text-[#000000]">Budget consummed {project.paymentCycle === "MONTHLY" && "this month"}:</span>
+              <div className="flex gap-3">
+                <div className="w-full">
+                  <div className="flex justify-between gap-2">
+                    <div className="flex gap-20">
+                      <span className="w-fit text-[20px] text-[#0C1024] font-bold">Nom du projet : </span>
+                      <span className="w-fit text-[20px] text-[#0C1024] font-bold">{oneProject.name.toString()}</span>
+                    </div>
+                    <div className="flex flex-1 flex-column items-end gap-3">
+                      <Links project={oneProject} />
+                    </div>
+                  </div>
+                  <div className="w-full md:w-[50%]">
+                    <div className="pt-2 ">
+                      <span className="text-[16px] text-[#676D7C] font-medium">{oneProject.description ? oneProject.description : ""}</span>
+                    </div>
+                    <div className="mt-4 text-[18px] text-[#000000] font-semibold">
+                      {`Objective :`} <span className="text-[#676D7C] text-[16px] font-medium">{oneProject.objective ? oneProject.objective : ""}</span>
+                    </div>
+                    <div className="mt-2 mr-2">
+                      <span className="text-[18px] font-semibold text-[#000000]">Budget consummed {oneProject.paymentCycle === "MONTHLY" && "this month"}:</span>
 
-                  <Budget project={project} />
+                      <Budget project={oneProject} />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        ))}
       <div className="flex flex-wrap p-3 gap-4"></div>
       <Activities project={project} />
     </div>
