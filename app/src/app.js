@@ -34,7 +34,7 @@ const App = () => {
         if (res.token) api.setToken(res.token);
         dispatch(setUser(res.user));
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
       setLoading(false);
     }
