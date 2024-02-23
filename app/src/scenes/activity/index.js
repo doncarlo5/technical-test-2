@@ -95,9 +95,10 @@ const Activities = ({ date, user, project }) => {
 
   async function onDelete(i) {
     if (window.confirm("Are you sure ?")) {
+      console.log("activitiessss", activities[i]);
       const activity = activities[i];
       await api.remove(`/activity/${activity._id}`);
-      toast.success(`Deleted ${activity.project}`);
+      toast.success(`Deleted ${activity.projectName}`);
     }
   }
 
