@@ -153,7 +153,7 @@ const Activities = ({ date, user, project }) => {
                 <thead>
                   <tr>
                     <th className="py-[10px] text-[14px] font-bold text-[#212325] text-left pl-[10px]">Projects</th>
-                    {days.map((e) => {
+                    {days.map((e, i) => {
                       const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
                       const _date = new Date(e);
                       const day = _date.getDay();
@@ -162,7 +162,7 @@ const Activities = ({ date, user, project }) => {
                       return (
                         <th
                           className={`w-[20px] border border-[#E5EAEF] text-[12px] font-semibold text-center ${day == 0 || day == 6 ? "bg-[#FFD5F1]" : "bg-[white]"}`}
-                          key={e}
+                          key={i}
                           day={day}>
                           <div>{weekday}</div>
                           <div>{date}</div>
@@ -189,7 +189,7 @@ const Activities = ({ date, user, project }) => {
                   </tr>
                   {activities.map((activity, i) => {
                     return (
-                      <React.Fragment key={activity.project}>
+                      <React.Fragment key={activity.projectName}>
                         <tr className="border-t border-b border-r border-[#E5EAEF]" key={`1-${activity._id}`} onClick={() => setOpen(i)}>
                           <th className="w-[100px] border-t border-b border-r text-[12px] font-bold text-[#212325] text-left">
                             <div className="flex flex-1 items-center justify-between gap-1 px-2">
