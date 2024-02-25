@@ -16,16 +16,16 @@ router.get("/", passport.authenticate("user", { session: false }), async (req, r
     console.log("emails🔽", emails);
     const resend = new Resend(process.env.RESEND_API_KEY);
     console.log("resend🔽", resend);
-    // const { data, error } = await resend.emails.send({
-    //   from: "onboarding@resend.dev",
-    //   to: emails,
-    //   subject: "Hello World",
-    //   html: "<p>Congrats on sending your <strong>first email</strong>!</p>",
-    // });
-    // console.log("error🔽", error);
-    // if (error) {
-    //   throw new Error(error);
-    // }
+    const { data, error } = await resend.emails.send({
+      from: "contact@villacapodimuro.fr",
+      to: emails,
+      subject: "💡 Reminder: Complete your timesheet",
+      html: "<p> Hello team, please complete your timesheet <strong>before this weekend 😉</strong>!</p>",
+    });
+    console.log("error🔽", error);
+    if (error) {
+      throw new Error(error);
+    }
 
     res.status(200).send({ ok: true });
   } catch (error) {
