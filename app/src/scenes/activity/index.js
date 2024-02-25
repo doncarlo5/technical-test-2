@@ -187,24 +187,29 @@ const Activities = ({ date, user, project }) => {
                       return <Field key={`day-${i}`} value={v} disabled />;
                     })}
                   </tr>
-                  {activities.map((e, i) => {
+                  {activities.map((activity, i) => {
                     return (
-                      <React.Fragment key={e.project}>
-                        <tr className="border-t border-b border-r border-[#E5EAEF]" key={`1-${e._id}`} onClick={() => setOpen(i)}>
+                      <React.Fragment key={activity.project}>
+                        <tr className="border-t border-b border-r border-[#E5EAEF]" key={`1-${activity._id}`} onClick={() => setOpen(i)}>
                           <th className="w-[100px] border-t border-b border-r text-[12px] font-bold text-[#212325] text-left">
                             <div className="flex flex-1 items-center justify-between gap-1 px-2">
                               <div className="flex flex-1 items-center justify-start gap-1">
-                                <div>{e.projectName}</div>
+                                <div>{activity.projectName}</div>
                               </div>
                               <div className="flex flex-col items-end">
-                                <div className="text-xs italic font-normal">{(e.total / 8).toFixed(2)} days</div>
-                                <div className="text-[10px] italic font-normal">{(((e.total / 8).toFixed(2) / getTotal()) * 100).toFixed(2)}%</div>
+                                <div className="text-xs italic font-normal">{(activity.total / 8).toFixed(2)} days</div>
+                                <div className="text-[10px] italic font-normal">{(((activity.total / 8).toFixed(2) / getTotal()) * 100).toFixed(2)}%</div>
                               </div>
                             </div>
                           </th>
-                          {e.detail.map((f, j) => {
+                          {activity.detail.map((f, j) => {
                             return (
-                              <Field key={`${e.project} ${j}`} invoiced={e.invoiced} value={f.value || 0} onChange={(a) => onUpdateValue(i, j, parseFloat(a.target.value || 0))} />
+                              <Field
+                                key={`${activity.project} ${j}`}
+                                invoiced={activity.invoiced}
+                                value={f.value || 0}
+                                onChange={(a) => onUpdateValue(i, j, parseFloat(a.target.value || 0))}
+                              />
                             );
                           })}
                           <th className={`border border-[#E5EAEF] py-[6px]`}>
@@ -215,7 +220,7 @@ const Activities = ({ date, user, project }) => {
                         </tr>
 
                         {open === i && (
-                          <tr className="border border-[#E5EAEF]" key={`2-${e._id}`}>
+                          <tr className="border border-[#E5EAEF]" key={`2-${activity._id}`}>
                             <th className="w-[100px] border border-[#E5EAEF]  text-[12px] font-bold text-[#212325] text-left pl-[10px]">
                               <div></div>
                             </th>
@@ -223,9 +228,9 @@ const Activities = ({ date, user, project }) => {
                               <div className="w-full">
                                 {/* <th>My Work Space</th> */}
                                 <textarea
-                                  value={e.comment}
+                                  value={activity.comment}
                                   onChange={(e) => onUpdateComment(i, e.target.value)}
-                                  placeholder={`Please add a comment on what you deliver on ${e.projectName} (We need to show value created to clients)`}
+                                  placeholder={`Please add a comment on what you deliver on ${activity.projectName} (We need to show value created to clients)`}
                                   rows={6}
                                   className="w-full text-sm pt-2 pl-2"
                                 />
