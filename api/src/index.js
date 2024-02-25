@@ -32,3 +32,5 @@ app.get("/", async (req, res) => {
 require("./passport")(app);
 
 app.listen(PORT, () => console.log("Listening on port " + PORT));
+
+app.use("/notification", require("./controllers/notification"));

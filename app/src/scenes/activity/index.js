@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
-import { MdDeleteForever, MdPrint } from "react-icons/md";
+import { MdDeleteForever, MdSend } from "react-icons/md";
 import { useSelector } from "react-redux";
 import Loader from "../../components/loader";
 import api from "../../services/api";
@@ -130,20 +130,21 @@ const Activities = ({ date, user, project }) => {
     return (activities.reduce((acc, a) => acc + a.total, 0) / 8).toFixed(2);
   };
 
-  const printRef = useRef();
-
-  // handle print
-  const handlePrint = useReactToPrint({
-    content: () => printRef.current,
-  });
+  // handle send
+  async function handleSend() {
+    if (window.confirm("Would you like to send an email reminder to all users to complete their timesheets?")) {
+      const response = await api.get(`/notification`);
+      console.log("response🔽", response);
+      if (response.ok) {
+        toast.success("Emails sent");
+      } else {
+        toast.error("Error sending emails");
+      }
+    }
+  }
 
   return (
-    <div ref={printRef} className="flex flex-wrap py-3 gap-4 text-black">
-      <style type="text/css" media="print">
-        {"\
-  @page { size: landscape; }\
-"}
-      </style>
+    <div className="flex flex-wrap py-3 gap-4 text-black">
       <div className="w-screen md:w-full p-2 md:!px-8">
         {/* Table Container */}
         {true && (
@@ -252,7 +253,7 @@ const Activities = ({ date, user, project }) => {
             <button className="m-3 w-[82px] h-[48px] py-[12px] px-[22px] bg-[#0560FD] text-[16px] font-medium text-[#fff] rounded-[10px]" onClick={onSave}>
               Save
             </button>
-            <MdPrint onClick={handlePrint} className="m-3 w-[82px] h-[48px] py-[12px] px-[22px] bg-[#0560FD] text-[16px] font-medium text-[#fff] rounded-[10px] cursor-pointer" />
+            <MdSend onClick={handleSend} className="m-3 w-[82px] h-[48px] py-[12px] px-[22px] bg-[#0560FD] text-[16px] font-medium text-[#fff] rounded-[10px] cursor-pointer" />
           </div>
         )}
       </div>
