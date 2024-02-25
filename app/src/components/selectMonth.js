@@ -29,7 +29,7 @@ export default ({ value = "", onChange, start = 0, name = "date", indexDefaultVa
         disabled={disabled}
         className="w-[180px] bg-[#FFFFFF] text-[14px] text-[#212325] font-normal py-[10px] px-[14px] rounded-[10px] border-r-[16px] border-[transparent] cursor-pointer shadow-sm"
         name={name}
-        value={value}
+        value={value || ""}
         onChange={onChange}>
         <option disabled>Month</option>
         <option key={""} value={""}>
