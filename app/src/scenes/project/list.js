@@ -146,6 +146,7 @@ const Create = ({ onChangeSearch }) => {
                   if (!res.ok) throw res;
                   toast.success("Created!");
                   setOpen(false);
+                  location.reload();
                 } catch (e) {
                   console.log(e);
                   toast.error("Some Error!", e.code);
