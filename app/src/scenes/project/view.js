@@ -1,9 +1,10 @@
 import { Chart as ChartJS, registerables } from "chart.js";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { IoIosAt, IoIosLink, IoIosStats, IoLogoGithub } from "react-icons/io";
 import { RiRoadMapLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 
 import { getDaysInMonth } from "./utils";
 
@@ -12,6 +13,7 @@ import api from "../../services/api";
 
 import ProgressBar from "../../components/ProgressBar";
 import SelectMonth from "./../../components/selectMonth";
+import { MdPrint } from "react-icons/md";
 
 ChartJS.register(...registerables);
 
@@ -153,8 +155,18 @@ const Activities = ({ project }) => {
     return (activities.reduce((acc, a) => acc + a.total, 0) / 8).toFixed(2);
   };
 
+  const printRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+  });
+
   return (
-    <div>
+    <div ref={printRef}>
+      <style type="text/css" media="print">
+        {"\
+  @page { size: landscape; }\
+"}
+      </style>
       <div className="flex flex-wrap p-3 gap-4 text-black	">
         <div className="w-full bg-[#ffffff] border border-[#E5EAEF] rounded-[16px] overflow-hidden">
           <div className="flex gap-5 p-2">
@@ -229,6 +241,11 @@ const Activities = ({ project }) => {
               </table>
             </div>
           </div>
+        </div>
+        <div>
+          <button onClick={handlePrint}>
+            <MdPrint className="m-3 w-[82px] h-[48px] py-[12px] px-[22px] bg-[#0560FD] text-[16px] font-medium text-[#fff] rounded-[10px] cursor-pointer" />
+          </button>
         </div>
       </div>
     </div>
